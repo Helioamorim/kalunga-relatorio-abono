@@ -103394,6 +103394,30 @@
             document.getElementById('areaComparativo').innerHTML=h;
         }
         
+                // ================= FILTRO POR URL =================
+        (function(){
+            var params = new URLSearchParams(window.location.search);
+            var lojaUrl = params.get('loja');
+            var tipoUrl = params.get('tipo');
+            
+            if(lojaUrl && tipoUrl === 'loja'){
+                var dadosFiltrados = [];
+                for(var i = 0; i < dados.length; i++){
+                    if(dados[i]['Loja'] === lojaUrl || 
+                       (dados[i]['Loja'] && dados[i]['Loja'].toString().indexOf(lojaUrl) >= 0)){
+                        dadosFiltrados.push(dados[i]);
+                    }
+                }
+                if(dadosFiltrados.length > 0){
+                    dados.length = 0;
+                    for(var i = 0; i < dadosFiltrados.length; i++){
+                        dados.push(dadosFiltrados[i]);
+                    }
+                    document.getElementById('filtroRegional').parentElement.style.display = 'none';
+                }
+            }
+        })();
+        
         inicializar();
     </script>
 </body>
